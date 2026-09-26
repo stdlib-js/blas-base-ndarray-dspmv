@@ -1,4 +1,4 @@
-/**
+/*
 * @license Apache-2.0
 *
 * Copyright (c) 2026 The Stdlib Authors.
@@ -16,20 +16,11 @@
 * limitations under the License.
 */
 
-'use strict';
+// TypeScript Version: 4.1
 
-// MODULES //
+/// <reference types="https://cdn.jsdelivr.net/gh/stdlib-js/types@main/index.d.ts"/>
 
-var numelDimension = require( '@stdlib/ndarray-base-numel-dimension' );
-var getOrder = require( '@stdlib/ndarray-base-order' );
-var getStride = require( '@stdlib/ndarray-base-stride' );
-var getOffset = require( '@stdlib/ndarray-base-offset' );
-var getData = require( '@stdlib/ndarray-base-data-buffer' );
-var ndarraylike2scalar = require( '@stdlib/ndarray-base-ndarraylike2scalar' );
-var strided = require( '@stdlib/blas-base-dspmv' ).ndarray;
-
-
-// MAIN //
+import { float64ndarray, typedndarray, ndarray } from '@stdlib/types/ndarray';
 
 /**
 * Performs the matrix-vector operation `y = alpha*A*x + beta*y`, where `alpha` and `beta` are scalars, `x` and `y` are one-dimensional ndarrays, and `A` is an `N` by `N` symmetric matrix supplied in packed form.
@@ -45,8 +36,8 @@ var strided = require( '@stdlib/blas-base-dspmv' ).ndarray;
 *     -   a zero-dimensional ndarray containing a scalar constant corresponding to `alpha`.
 *     -   a zero-dimensional ndarray containing a scalar constant corresponding to `beta`.
 *
-* @param {ArrayLikeObject<Object>} arrays - array-like object containing ndarrays
-* @returns {Object} output ndarray
+* @param arrays - array-like object containing ndarrays
+* @returns output ndarray
 *
 * @example
 * var Float64Vector = require( '@stdlib/ndarray-vector-float64' );
@@ -73,28 +64,9 @@ var strided = require( '@stdlib/blas-base-dspmv' ).ndarray;
 * var bool = ( z === y );
 * // returns true
 */
-function dspmv( arrays ) {
-	var alpha;
-	var uplo;
-	var beta;
-	var AP;
-	var x;
-	var y;
-
-	AP = arrays[ 0 ];
-	x = arrays[ 1 ];
-	y = arrays[ 2 ];
-
-	uplo = ndarraylike2scalar( arrays[ 3 ] );
-	alpha = ndarraylike2scalar( arrays[ 4 ] );
-	beta = ndarraylike2scalar( arrays[ 5 ] );
-
-	strided( getOrder( AP ), uplo, numelDimension( x, 0 ), alpha, getData( AP ), getOffset( AP ), getData( x ), getStride( x, 0 ), getOffset( x ), beta, getData( y ), getStride( y, 0 ), getOffset( y ) ); // eslint-disable-line max-len
-
-	return y;
-}
+declare function dspmv( arrays: [ float64ndarray, float64ndarray, float64ndarray, ndarray, typedndarray<number>, typedndarray<number> ] ): float64ndarray;
 
 
 // EXPORTS //
 
-module.exports = dspmv;
+export = dspmv;
